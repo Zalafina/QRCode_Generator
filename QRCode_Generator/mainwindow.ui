@@ -43,7 +43,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>50</x>
       <y>90</y>
       <width>260</width>
       <height>260</height>
@@ -81,22 +81,37 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
-     <string>生成二维码</string>
+     <string>Generate</string>
+    </property>
+    <property name="default">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="saveFileButton">
     <property name="geometry">
      <rect>
-      <x>394</x>
+      <x>340</x>
       <y>240</y>
-      <width>91</width>
-      <height>41</height>
+      <width>141</width>
+      <height>51</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
-     <string>保存到图片文件
-QRCode</string>
+     <string>Save imagefile to
+QRCode.png</string>
     </property>
    </widget>
    <widget class="QComboBox" name="comboBox">
@@ -130,14 +145,17 @@ QRCode</string>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>353</x>
+      <x>340</x>
       <y>180</y>
-      <width>71</width>
+      <width>91</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>存储图片格式</string>
+     <string>ImageFileType</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>

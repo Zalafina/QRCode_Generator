@@ -1,6 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+static const QString SAVE_TO_PNG(QString("Save imagefile to\nQRCode.png"));
+static const QString SAVE_TO_JPG(QString("Save imagefile to\nQRCode.jpg"));
+static const QString SAVE_TO_BMP(QString("Save imagefile to\nQRCode.bmp"));
+
 MainWindow::MainWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MainWindow)
@@ -91,4 +95,25 @@ void MainWindow::on_saveFileButton_pressed()
     }
 
     delete controller;
+}
+
+void MainWindow::on_comboBox_currentIndexChanged(const QString &arg1)
+{
+    QString savetofile_buttonStr;
+
+    QString filetypeStr;
+    if (arg1 == QString("BMP")){
+        savetofile_buttonStr = SAVE_TO_BMP;
+    }
+    else if (arg1 == QString("JPG")){
+        savetofile_buttonStr = SAVE_TO_JPG;
+    }
+    else if (arg1 == QString("PNG")){
+        savetofile_buttonStr = SAVE_TO_PNG;
+    }
+    else{
+        savetofile_buttonStr = SAVE_TO_PNG;
+    }
+
+    ui->saveFileButton->setText(savetofile_buttonStr);
 }
