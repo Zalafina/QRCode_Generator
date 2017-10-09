@@ -11,6 +11,15 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = QRCode_Generator
 TEMPLATE = app
 
+CONFIG(debug, debug|release){
+    DEFINES += DEBUG_LOGOUT_ON
+    message("Debug Build")
+}
+
+CONFIG(release, debug|release){
+    message("Release Build")
+}
+
 RC_ICONS = image/my_icon.ico
 
 SOURCES += main.cpp\
