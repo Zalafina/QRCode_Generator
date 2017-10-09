@@ -2,14 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QDebug>
-#include <QMainWindow>
+#include <QDialog>
 #include "QRController.h"
 
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QDialog
 {
     Q_OBJECT
 
