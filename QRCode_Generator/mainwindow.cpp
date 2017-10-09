@@ -10,6 +10,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    ui->label->setScaledContents(true);
+    if ((ui->label->pixmap() != NULL)
+            && (ui->label->pixmap()->isNull() != true)){
+        ui->saveFileButton->setEnabled(true);
+    }
+    else{
+        ui->saveFileButton->setEnabled(false);
+    }
 }
 
 MainWindow::~MainWindow()
@@ -19,29 +28,61 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_generateButton_pressed()
 {
+    bool image_loadfailure = false;
+    bool invalid_qrimage = false;
+
     QByteArray tempstring = ui->lineEdit->text().toLatin1().constData();
     //qDebug("InputString : %s", tempstring.constData());
 
     QRController* controller = new QRController(tempstring.constData(), eclMedium, 250, 250, evAuto);
 
     vector<char> tempBitmapArray;
-    controller->SaveToByteArray(tempBitmapArray);
-    QByteArray tempQArray(tempBitmapArray.data(), tempBitmapArray.size());
+    bool result;
+    result = controller->SaveToByteArray(tempBitmapArray);
 
-    QPixmap QRCodeBitmap;
-    bool loadresult = false;
-    loadresult = QRCodeBitmap.loadFromData(tempQArray, "BMP");
+    if (true == result){
+        QByteArray tempQArray(tempBitmapArray.data(), tempBitmapArray.size());
 
-    if (true == loadresult){
-        //qDebug("QRCodeImage Load Complete.");
+        QPixmap QRCodeBitmap;
+        bool loadresult = false;
+        loadresult = QRCodeBitmap.loadFromData(tempQArray, "BMP");
 
-        ui->label->setPixmap(QRCodeBitmap);
+        if (true == loadresult){
+            //qDebug("QRCodeImage Load Complete.");
+
+            ui->label->setPixmap(QRCodeBitmap);
+        }
+        else{
+            image_loadfailure = true;
+            //QMessageBox::warning(this, tr("QRCode_Generator"), tr("QRCodeImage Load Failure."));
+            //qDebug("QRCodeImage Load Failed!!!");
+        }
     }
     else{
-        //qDebug("QRCodeImage Load Failed!!!");
+        invalid_qrimage = true;
+        ui->label->setPixmap(QPixmap());
+        //QMessageBox::warning(this, tr("QRCode_Generator"), tr("Invalid QRCodeImage."));
+    }
+
+    if ((ui->label->pixmap() != NULL)
+            && (ui->label->pixmap()->isNull() != true)){
+        ui->saveFileButton->setEnabled(true);
+    }
+    else{
+        ui->saveFileButton->setEnabled(false);
     }
 
     delete controller;
+
+    if (true == image_loadfailure){
+        QMessageBox::warning(this, tr("QRCode_Generator"), tr("QRCodeImage Load Failure."));
+    }
+    else if (true == invalid_qrimage){
+        QMessageBox::warning(this, tr("QRCode_Generator"), tr("Invalid QRCodeImage."));
+    }
+    else{
+        // do nothing.
+    }
 }
 
 void MainWindow::on_saveFileButton_pressed()

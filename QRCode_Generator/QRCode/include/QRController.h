@@ -22,8 +22,8 @@ class QRController
         int getVersion(void);
         void setVersion(int version);
 
-        void SaveToFile(string file_name);
-        void SaveToByteArray(vector<char> & bitmap_array);
+        bool SaveToFile(string file_name);
+        bool SaveToByteArray(vector<char> & bitmap_array);
     protected:
     private:
         int Width;

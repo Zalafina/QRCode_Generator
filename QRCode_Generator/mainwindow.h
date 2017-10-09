@@ -3,6 +3,7 @@
 
 #include <QDebug>
 #include <QDialog>
+#include <QMessageBox>
 #include "QRController.h"
 
 namespace Ui {

@@ -117,8 +117,9 @@ void QRController::setVersion(int version)
 }
 //-------------------------------------------------------------------
 
-void QRController::SaveToFile(string file_name)
+bool QRController::SaveToFile(string file_name)
 {
+    bool generate_result = false;
     QRCode* qr_code     = NULL;
     QRBitmapDraw* bmp   = NULL;
 
@@ -141,6 +142,7 @@ void QRController::SaveToFile(string file_name)
         {
             bmp = new QRBitmapDraw(qr_code, Width, Height);
             bmp->SaveToFile(file_name);
+            generate_result = true;
         }
         else
         {
@@ -159,10 +161,12 @@ void QRController::SaveToFile(string file_name)
     if (qr_code != NULL)
         delete qr_code;
 
+    return generate_result;
 }
 
-void QRController::SaveToByteArray(vector<char> &bitmap_array)
+bool QRController::SaveToByteArray(vector<char> &bitmap_array)
 {
+    bool generate_result = false;
     QRCode* qr_code     = NULL;
     QRBitmapDraw* bmp   = NULL;
 
@@ -185,6 +189,7 @@ void QRController::SaveToByteArray(vector<char> &bitmap_array)
         {
             bmp = new QRBitmapDraw(qr_code, Width, Height);
             bmp->SaveToByteArray(bitmap_array);
+            generate_result = true;
         }
         else
         {
@@ -202,6 +207,8 @@ void QRController::SaveToByteArray(vector<char> &bitmap_array)
 
     if (qr_code != NULL)
         delete qr_code;
+
+    return generate_result;
 }
 //-------------------------------------------------------------------
 QRCode* QRController::SelectQRCode(void)
