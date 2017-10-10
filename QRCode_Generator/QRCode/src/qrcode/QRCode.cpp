@@ -170,7 +170,7 @@ string QRCode::getCountIndicator(void)
             padding_size = 12;
     }
 
-    while (strlen(binary_data.c_str()) < padding_size)
+    while (strlen(binary_data.c_str()) < (unsigned int)padding_size)
         binary_data.insert(0, "0");
 
     return binary_data;
@@ -501,7 +501,7 @@ string QRCode::EncodeData(void)
 //-------------------------------------------------------------------
 vector<int> QRCode::SplitEncodedData(string encoded_data, int &data_size)
 {
-    int i       = 0;
+    unsigned int i       = 0;
     string str  = "";
     vector<int> res;
 
@@ -553,7 +553,7 @@ vector<Monomial> QRCode::getEC_Moltiplication(vector<Monomial> previous, vector<
 {
     vector<Monomial> res;
 
-    for (int i = 0; i < gen_polynomial.size(); i++)
+    for (unsigned int i = 0; i < gen_polynomial.size(); i++)
     {
         int a       = AntiLog[previous.at(0).ExpA];
         int b       = gen_polynomial.at(i).ExpA;
@@ -575,12 +575,12 @@ vector<Monomial> QRCode::getEC_XORing(vector<Monomial> previous, vector<Monomial
     vector<Monomial> res;
 
     int diff = previous.size() - first_step.size() ;
-    int cnt  = previous.size();
+    unsigned int cnt  = previous.size();
 
     if (diff < 0)
         cnt = first_step.size();
 
-    for (int i = 0; i < cnt; i++)
+    for (unsigned int i = 0; i < cnt; i++)
     {
         int a =  (i<previous.size())?previous.at(i).ExpA:0;
         int b =  (i<first_step.size())?first_step.at(i).ExpA:0;
@@ -611,7 +611,7 @@ vector<int> QRCode::CreateECPerBlock(int cw_per_block, string data_block)
 
     if (x_inc_value > 0)
     {
-        for (int i = 0; i < gen_polynomial.size(); i++)
+        for (unsigned int i = 0; i < gen_polynomial.size(); i++)
             gen_polynomial.at(i).ExpX = x_inc_value + gen_polynomial.at(i).ExpX;
     }
 
@@ -626,7 +626,7 @@ vector<int> QRCode::CreateECPerBlock(int cw_per_block, string data_block)
         second_step.clear();
     }
 
-    for (int i=0; i< msg_polynomial.size(); i++)
+    for (unsigned int i=0; i< msg_polynomial.size(); i++)
         res.push_back(msg_polynomial.at(i).ExpA);
 
     msg_polynomial.clear();
@@ -638,7 +638,7 @@ vector<int> QRCode::CreateECPerBlock(int cw_per_block, string data_block)
 //-------------------------------------------------------------------
 string QRCode::BinaryPadLeft(string binary, int length, char* pad_char)
 {
-    while (strlen(binary.c_str()) < length)
+    while ((int)strlen(binary.c_str()) < length)
         binary.insert(0, pad_char);
 
     return binary;
@@ -648,7 +648,7 @@ string QRCode::BinaryPadLeft(string binary, int length, char* pad_char)
 
 string QRCode::BinaryPadRight(string binary, int length, char* pad_char)
 {
-    while (strlen(binary.c_str()) < length)
+    while ((int)strlen(binary.c_str()) < length)
         binary.append(pad_char);
 
     return binary;
@@ -664,11 +664,11 @@ vector<string> QRCode::CreateEC(vector<string> data_blocks, int cw_per_blocks)
 
     vector<int> ec_block;
 
-    for (int i=0; i < data_blocks.size(); i++)
+    for (unsigned int i=0; i < data_blocks.size(); i++)
     {
         ec_block = CreateECPerBlock(cw_per_blocks, data_blocks.at(i));
 
-        for (int j = 0; j < ec_block.size(); j++)
+        for (unsigned int j = 0; j < ec_block.size(); j++)
         {
             binary_value =  DecimalToBinary(ec_block.at(j));
             binary_block += BinaryPadLeft(binary_value, 8);
@@ -714,7 +714,7 @@ int QRCode::BinaryToDecimal(string value)
     for (int i = value_size; i >= 0; i--)
     {
         if (value[i] == '1')
-            res += pow(2, value_size-i);
+            res += (int)pow(2, value_size-i);
     }
 
     return res;
@@ -733,7 +733,7 @@ string QRCode::getInterlivedCodewords(vector<string> data_blocks, vector<string>
 
     if (error_correction.size() == 1)
     {
-        for (int i = 0; i < data_blocks.size(); i++)
+        for (unsigned int i = 0; i < data_blocks.size(); i++)
             res += data_blocks.at(i);
 
         res += error_correction.at(0);
@@ -748,18 +748,18 @@ string QRCode::getInterlivedCodewords(vector<string> data_blocks, vector<string>
 
         for (int i = 0; i < cnt; i+=8)
         {
-            for (int j = 0; j < data_blocks.size(); j++)
+            for (unsigned int j = 0; j < data_blocks.size(); j++)
             {
-                if (i < strlen(data_blocks.at(j).c_str()))
+                if (i < (int)strlen(data_blocks.at(j).c_str()))
                     res += data_blocks.at(j).substr(i, 8);
             }
         }
 
         for (int i = 0; i < ec_info.EC_CWPerBlocks*8; i+=8)
         {
-            for (int j = 0; j < error_correction.size(); j++)
+            for (unsigned int j = 0; j < error_correction.size(); j++)
             {
-                if (i < strlen(error_correction.at(j).c_str()))
+                if (i < (int)strlen(error_correction.at(j).c_str()))
                     res += error_correction.at(j).substr(i, 8);
             }
         }
@@ -802,7 +802,7 @@ string QRCode::Binary_XOR(string A, string B)
 {
     string res = "";
 
-    for (int i = 0; i < strlen(A.c_str()); i++)
+    for (unsigned int i = 0; i < strlen(A.c_str()); i++)
     {
         int a = (A[i] == '0')?0:1;
         int b = (B[i] == '0')?0:1;

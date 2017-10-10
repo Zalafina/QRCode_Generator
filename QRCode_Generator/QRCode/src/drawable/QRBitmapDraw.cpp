@@ -78,7 +78,7 @@ int QRBitmapDraw::getModuleWidth(void)
     int res = 0;
     int modules = this->QrCode->getModules();
     if (modules > 0)
-        res = floor(bitmap->getWidth() / modules);
+        res = (int)floor(bitmap->getWidth() / modules);
 
     return res;
 }
@@ -118,6 +118,7 @@ void QRBitmapDraw::DrawTimingPattern(void)
 {
     int modules         = this->QrCode->getModules();
     int module_width    = getModuleWidth();
+    (void)module_width;
 
     for (int i = 0; i < modules-16; i=i+2)
     {
@@ -151,7 +152,7 @@ void QRBitmapDraw::DrawFormatInformation(string data)
     int x = 0;
     int y = 8;
 
-    for(int i = 0; i < strlen(data.c_str()); i++)
+    for(unsigned int i = 0; i < strlen(data.c_str()); i++)
     {
         if (x == 6)
             x++;
@@ -205,7 +206,7 @@ void QRBitmapDraw::DrawAlignmentPattern(void)
 {
     vector<Point> alignement_patterns = QrCode->getAlignementPatterns();
 
-    for (int j = 0; j < alignement_patterns.size(); j++)
+    for (unsigned int j = 0; j < alignement_patterns.size(); j++)
     {
         Point p = alignement_patterns.at(j);
 
@@ -326,7 +327,7 @@ void QRBitmapDraw::CreateVersionReservation(void)
 
 Point QRBitmapDraw::getNextPoint(int x, int y)
 {
-    int temp = floor((QrCode->getModules() - x -1)/2);
+    int temp = (int)floor((QrCode->getModules() - x -1)/2);
 
     bool up = ((x > 6 && temp%2 == 0) || (x < 6 && temp%2 == 1))?true:false;
 
@@ -338,6 +339,7 @@ Point QRBitmapDraw::getNextPoint(int x, int y)
     if (x0 == 1 && y0 == 8)
     {
         int t=0;
+        (void)t;
     }
     if ((x0 > 6 && x0 % 2 == 0) || (x0 < 6 && x0 % 2 == 1))
     {
@@ -479,7 +481,7 @@ string QRBitmapDraw::ApplyMask(string data)
 
     vector<QRMask*> masks   = CreateMasks(data);
 
-    for (int i = 0; i < masks.size(); i++)
+    for (unsigned int i = 0; i < masks.size(); i++)
     {
         QRMask* mask = masks.at(i);
 
@@ -518,7 +520,7 @@ bool QRBitmapDraw::ModuleReserved(int x, int y)
 {
     bool res = false;
 
-    for (int i = 0; i < ReservedModules.size(); i++)
+    for (unsigned int i = 0; i < ReservedModules.size(); i++)
     {
         if (ReservedModules.at(i).X == x && ReservedModules.at(i).Y == y)
         {

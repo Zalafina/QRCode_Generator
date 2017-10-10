@@ -27,6 +27,7 @@ QRMask3::QRMask3(int module_count, int module_width, Bitmap* bmp_mask) : QRMask(
 
 bool QRMask3::IsMaskCondition(int x, int y)
 {
+    (void)y;
     bool res    = false;
     res         = x%3 == 0;
 

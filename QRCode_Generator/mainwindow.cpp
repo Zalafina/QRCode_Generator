@@ -11,9 +11,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->label->setScaledContents(true);
-    if ((ui->label->pixmap() != NULL)
-            && (ui->label->pixmap()->isNull() != true)){
+    //ui->qrcodepixmapLabel->setScaledContents(true);
+    if ((ui->qrcodepixmapLabel->pixmap() != NULL)
+            && (ui->qrcodepixmapLabel->pixmap()->isNull() != true)){
         ui->saveFileButton->setEnabled(true);
     }
     else{
@@ -31,10 +31,9 @@ void MainWindow::on_generateButton_pressed()
     bool image_loadfailure = false;
     bool invalid_qrimage = false;
 
-    QByteArray tempstring = ui->lineEdit->text().toLatin1().constData();
-    //qDebug("InputString : %s", tempstring.constData());
-
-    QRController* controller = new QRController(tempstring.constData(), eclMedium, 250, 250, evAuto);
+    int qrcode_width = ui->qrcodepixmapLabel->width();
+    int qrcode_height = ui->qrcodepixmapLabel->height();
+    QRController* controller = new QRController(ui->lineEdit->text().toUtf8().constData(), eclMedium, qrcode_width, qrcode_height, evAuto);
 
     vector<char> tempBitmapArray;
     bool result;
@@ -48,9 +47,11 @@ void MainWindow::on_generateButton_pressed()
         loadresult = QRCodeBitmap.loadFromData(tempQArray, "BMP");
 
         if (true == loadresult){
-            //qDebug("QRCodeImage Load Complete.");
+#ifdef DEBUG_LOGOUT_ON
+            qDebug("QRCodeImage width(%d) height(%d) Load Complete.", QRCodeBitmap.width(), QRCodeBitmap.height());
+#endif
 
-            ui->label->setPixmap(QRCodeBitmap);
+            ui->qrcodepixmapLabel->setPixmap(QRCodeBitmap);
         }
         else{
             image_loadfailure = true;
@@ -60,12 +61,12 @@ void MainWindow::on_generateButton_pressed()
     }
     else{
         invalid_qrimage = true;
-        ui->label->setPixmap(QPixmap());
+        ui->qrcodepixmapLabel->setPixmap(QPixmap());
         //QMessageBox::warning(this, tr("QRCode Generator"), tr("Invalid QRCodeImage."));
     }
 
-    if ((ui->label->pixmap() != NULL)
-            && (ui->label->pixmap()->isNull() != true)){
+    if ((ui->qrcodepixmapLabel->pixmap() != NULL)
+            && (ui->qrcodepixmapLabel->pixmap()->isNull() != true)){
         ui->saveFileButton->setEnabled(true);
     }
     else{
@@ -105,7 +106,7 @@ void MainWindow::on_saveFileButton_pressed()
     if (true == loadresult){
         //qDebug("QRCodeImage Load Complete.");
 
-        ui->label->setPixmap(QRCodeBitmap);
+        ui->qrcodepixmapLabel->setPixmap(QRCodeBitmap);
 
         QString imageType = ui->comboBox->currentText();
 
@@ -147,9 +148,9 @@ void MainWindow::on_saveFileButton_pressed()
         //qDebug("QRCodeImage Load Failed!!!");
     }
 #else
-    if ((ui->label->pixmap() != NULL)
-            && (ui->label->pixmap()->isNull() != true)){
-        const QPixmap *QRCodePixmap = ui->label->pixmap();
+    if ((ui->qrcodepixmapLabel->pixmap() != NULL)
+            && (ui->qrcodepixmapLabel->pixmap()->isNull() != true)){
+        const QPixmap *QRCodePixmap = ui->qrcodepixmapLabel->pixmap();
 
         QString imageType = ui->comboBox->currentText();
 

@@ -54,7 +54,7 @@ vector<Monomial> PolynomialGenerator::getPolynomial(int ec_codewords)
         B.push_back(Monomial(0,1));
         B.push_back(Monomial(j,0));
 
-        for (int i = 0; i < A.size(); i++)
+        for (unsigned int i = 0; i < A.size(); i++)
         {
             Monomial c;
             c.ExpA = A.at(i).ExpA+B.at(0).ExpA;
@@ -78,7 +78,7 @@ vector<Monomial> PolynomialGenerator::getPolynomial(int ec_codewords)
                 C.push_back(c);
         }
 
-        for (int i = 0; i < A.size(); i++)
+        for (unsigned int i = 0; i < A.size(); i++)
         {
             Monomial c;
             c.ExpA = A.at(i).ExpA+B.at(1).ExpA;
@@ -114,7 +114,7 @@ string PolynomialGenerator::ConvertToString(vector<Monomial> monomial_list)
 {
     string res = "";
 
-    for (int i = 0; i < monomial_list.size(); i++)
+    for (unsigned int i = 0; i < monomial_list.size(); i++)
     {
         res +=  monomial_list.at(i).toString();
 
@@ -130,7 +130,7 @@ int PolynomialGenerator::ExistsExpX(vector<Monomial> monomial_list, int exp_x)
 {
     int res = -1;
 
-    for (int i = 0; i < monomial_list.size(); i++)
+    for (unsigned int i = 0; i < monomial_list.size(); i++)
     {
         if (monomial_list.at(i).ExpX == exp_x)
         {

@@ -27,6 +27,7 @@ QRMask2::QRMask2(int module_count, int module_width, Bitmap* bmp_mask) : QRMask(
 
 bool QRMask2::IsMaskCondition(int x, int y)
 {
+    (void)x;
     bool res    = false;
     res         = y%2 == 0;
 

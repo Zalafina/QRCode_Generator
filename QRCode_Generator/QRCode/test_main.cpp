@@ -56,7 +56,7 @@ string load_from_file(char* file_name)
     ifstream f(file_name);
 
     f.seekg(0, std::ios::end);
-    data.reserve(f.tellg());
+    data.reserve((unsigned int)f.tellg());
     f.seekg(0, std::ios::beg);
 
     data.assign((std::istreambuf_iterator<char>(f)),

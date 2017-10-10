@@ -48,7 +48,7 @@ void Bitmap::Clear(void)
 
     //Initialize canvas setting white background color
     unsigned long pos = 0;
-    for (int i = 0; i < DIB_Header->Height; i++)
+    for (uint32_t i = 0; i < DIB_Header->Height; i++)
     {
         memset(Canvas+pos, 0xff, row_bytes); //Color
         memset(Canvas+pos+row_bytes, 0x00, padding); //Padding
@@ -105,7 +105,7 @@ bool Bitmap::SaveToByteArray(vector<char> &bitmap_array)
         for(int loop = 0; loop < sizeof(BITMAP_DIB_HEADER); loop++){
             bitmap_array.push_back(((char*)DIB_Header)[loop]);
         }
-        for(int loop = 0; loop < DIB_Header->ImageSize; loop++){
+        for(uint32_t loop = 0; loop < DIB_Header->ImageSize; loop++){
             bitmap_array.push_back(((char*)Canvas)[loop]);
         }
 
@@ -154,7 +154,7 @@ uint32_t Bitmap::getPixelColor(int x, int y)
 {
     uint32_t res = 0;
 
-    if (x >= 0 && y >= 0 && x < getWidth() && y < getHeight())
+    if (x >= 0 && y >= 0 && x < (int)getWidth() && y < (int)getHeight())
     {
         int padding     = (4 - (getWidth()*3) % 4) % 4;
         int pos         = (x + getWidth()*y)*3 + (padding * y);
@@ -172,7 +172,7 @@ uint32_t Bitmap::getPixelColor(int x, int y)
 
 void Bitmap::SetPixelColor(int x, int y, int R, int G, int B)
 {
-    if (x >= 0 && y >= 0 && x < getWidth() && y < getHeight())
+    if (x >= 0 && y >= 0 && x < (int)getWidth() && y < (int)getHeight())
     {
         int padding     = (4 - (getWidth()*3) % 4) % 4;
         int pos         = (x + getWidth()*y)*3 + (padding * y);
@@ -196,7 +196,7 @@ void Bitmap::DrawRectangle(int x, int y, int width, int height, uint32_t color)
 //-------------------------------------------------------------------
 void Bitmap::DrawRectangle(int x, int y, int width, int height, int R, int G, int B)
 {
-    if (x + width <= getWidth() && y + height <= getHeight())
+    if (x + width <= (int)getWidth() && y + height <= (int)getHeight())
     {
         for (int i = 0; i < width; i++)
         {
@@ -218,7 +218,7 @@ void Bitmap::FillArea(int x, int y, int width, int height, uint32_t color)
     int G = (color & 0x00ff00)>>8;
     int B = (color & 0x0000ff);
 
-    if (x + width <= getWidth() && y + height <= getHeight())
+    if (x + width <= (int)getWidth() && y + height <= (int)getHeight())
     {
         for (int i = 0; i < height; i++)
         {

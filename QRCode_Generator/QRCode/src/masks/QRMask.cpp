@@ -288,8 +288,8 @@ int QRMask::EvaluationCondition4(void)
 	    }
 
 	    double percent_dark     = (dark_module_count / total_modules) * 100;
-	    int previous_multiple   = percent_dark;
-	    int next_multiple       = percent_dark;
+	    int previous_multiple   = (int)percent_dark;
+	    int next_multiple       = (int)percent_dark;
 
 	    while (previous_multiple%5 != 0)
 	        previous_multiple--;
