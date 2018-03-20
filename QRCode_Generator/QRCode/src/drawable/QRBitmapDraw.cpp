@@ -89,7 +89,7 @@ void QRBitmapDraw::DrawPositionDetectionPattern(void)
     int modules         = this->QrCode->getModules();
     int module_width    = getModuleWidth();
 
-    if (bitmap && module_width > 0)
+    if ((bitmap) && (module_width > 0))
     {
         for (int i = 0; i < 7; i++)
         {

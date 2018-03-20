@@ -115,6 +115,56 @@ void QRController::setVersion(int version)
 {
     Version = version;
 }
+
+int QRController::getSuitablePixLength(int &suitablelength)
+{
+    bool check_result = false;
+    QRCode* qr_code   = NULL;
+
+    try
+    {
+        if (Version == evAuto)
+        {
+            //Data and Error Correction Level are set inside the method SelectQRCode
+            qr_code = SelectQRCode();
+        }
+        else
+        {
+            qr_code = getQRCode();
+
+            qr_code->setData(Data);
+            qr_code->setErrorCorrectionLevel(CorrectionLevel);
+        }
+
+        if (qr_code != NULL)
+        {
+            int minsize = qr_code->getModules();
+
+            if ((minsize > 0)
+                    && (Width >= minsize)
+                    && (Height >= minsize)){
+                suitablelength = (int)fmin(Width, Height) - ((int)fmin(Width, Height)) % minsize;
+                check_result = true;
+            }
+
+        }
+        else
+        {
+            throw EQRGeneric((char*)"Invalid QR Code at Suitable Bitmap Length Check");
+        }
+
+    }
+    catch(exception &e)
+    {
+        cout << e.what() << endl;
+    }
+
+    if (qr_code != NULL)
+        delete qr_code;
+
+    return check_result;
+}
+
 //-------------------------------------------------------------------
 
 bool QRController::SaveToFile(string file_name)

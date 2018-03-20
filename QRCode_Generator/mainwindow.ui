@@ -61,10 +61,10 @@
    <widget class="QLabel" name="qrcodepixmapLabel">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>90</y>
-      <width>280</width>
-      <height>280</height>
+      <x>40</x>
+      <y>80</y>
+      <width>300</width>
+      <height>300</height>
      </rect>
     </property>
     <property name="frameShape">

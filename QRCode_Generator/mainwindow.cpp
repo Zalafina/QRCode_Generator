@@ -34,6 +34,18 @@ void MainWindow::on_generateButton_pressed()
     int qrcode_width = ui->qrcodepixmapLabel->width();
     int qrcode_height = ui->qrcodepixmapLabel->height();
     QRController* controller = new QRController(ui->lineEdit->text().toUtf8().constData(), eclMedium, qrcode_width, qrcode_height, evAuto);
+    int suitablepixlength = 0;
+    bool checkresult = controller->getSuitablePixLength(suitablepixlength);
+    if (true == checkresult){
+        delete controller;
+        controller = new QRController(ui->lineEdit->text().toUtf8().constData(), eclMedium, suitablepixlength, suitablepixlength, evAuto);
+#ifdef DEBUG_LOGOUT_ON
+        qDebug("Resize QRCode pixlength from (%d) to (%d)", qrcode_width, suitablepixlength);
+#endif
+    }
+    else{
+        qDebug("Resize QRCode to suitablepixlength failure!!!");
+    }
 
     vector<char> tempBitmapArray;
     bool result;

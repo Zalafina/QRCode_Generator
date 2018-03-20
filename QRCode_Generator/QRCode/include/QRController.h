@@ -22,6 +22,8 @@ class QRController
         int getVersion(void);
         void setVersion(int version);
 
+        int getSuitablePixLength(int &suitablelength);
+
         bool SaveToFile(string file_name);
         bool SaveToByteArray(vector<char> & bitmap_array);
     protected:
