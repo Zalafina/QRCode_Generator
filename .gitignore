@@ -1,12 +1,12 @@
 # Qt generate file types
 
 build-*/*
-QRCode_Generator/*.pro.user
-QRCode_Generator/*.pro.user.*
-QRCode_Generator/*.moc
-QRCode_Generator/*.bin
-QRCode_Generator/moc_*.cpp
-QRCode_Generator/qrc_*.cpp
-QRCode_Generator/ui_*.h
-QRCode_Generator/Makefile*
-QRCode_Generator/*-build-*
+*.pro.user
+*.pro.user.*
+*.moc
+*.bin
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+Makefile*
+*-build-*
