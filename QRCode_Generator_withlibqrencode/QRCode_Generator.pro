@@ -37,7 +37,9 @@ LIBS += -L. \
         -L.. \
         -L./libs/ \
         -L../libs/ \
-        -lqrencode
+unix:   LIBS += -L../libs/linux/
+win32:  LIBS += -L../libs/win/
+LIBS += -lqrencode
 
 FORMS    += mainwindow.ui
 
