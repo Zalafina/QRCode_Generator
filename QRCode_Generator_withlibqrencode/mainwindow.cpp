@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     //ui->qrcodepixmapLabel->setScaledContents(true);
-    if ((ui->qrcodepixmapLabel->pixmap() != NULL)
+    if ((ui->qrcodepixmapLabel->pixmap() != Q_NULLPTR)
             && (ui->qrcodepixmapLabel->pixmap()->isNull() != true)){
         ui->saveFileButton->setEnabled(true);
     }
@@ -54,7 +54,7 @@ void MainWindow::on_generateButton_pressed()
         return;
     }
 
-    if ((ui->qrcodepixmapLabel->pixmap() != NULL)
+    if ((ui->qrcodepixmapLabel->pixmap() != Q_NULLPTR)
             && (ui->qrcodepixmapLabel->pixmap()->isNull() != true)){
         ui->saveFileButton->setEnabled(true);
     }
@@ -65,7 +65,7 @@ void MainWindow::on_generateButton_pressed()
 
 void MainWindow::on_saveFileButton_pressed()
 {
-    if ((ui->qrcodepixmapLabel->pixmap() != NULL)
+    if ((ui->qrcodepixmapLabel->pixmap() != Q_NULLPTR)
             && (ui->qrcodepixmapLabel->pixmap()->isNull() != true)){
         const QPixmap *QRCodePixmap = ui->qrcodepixmapLabel->pixmap();
 
