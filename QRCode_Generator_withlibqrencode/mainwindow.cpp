@@ -19,10 +19,17 @@ MainWindow::MainWindow(QWidget *parent) :
     else{
         ui->saveFileButton->setEnabled(false);
     }
+
+#ifdef Q_OS_WINDOWS
+    QRCodeGenerator::Initialize();
+#endif
 }
 
 MainWindow::~MainWindow()
 {
+#ifdef Q_OS_WINDOWS
+    QRCodeGenerator::Deinitialize();
+#endif
     delete ui;
 }
 

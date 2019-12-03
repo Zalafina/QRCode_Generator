@@ -33,13 +33,13 @@ HEADERS  += mainwindow.h \
 INCLUDEPATH += libs_inc \
         generator
 
-LIBS += -L. \
-        -L.. \
-        -L./libs/ \
-        -L../libs/ \
-unix:   LIBS += -L../libs/linux/
-win32:  LIBS += -L../libs/win/
-LIBS += -lqrencode
+unix:{
+	LIBS += -L../libs/linux/
+    LIBS += -lqrencode
+}
+win32:{
+	LIBS += -L../libs/win/x64/
+}
 
 FORMS    += mainwindow.ui
 
