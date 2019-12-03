@@ -6,7 +6,12 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += widgets
+    TARGET_ARCH=$${QT_ARCH}
+} else {
+    TARGET_ARCH=$${QMAKE_HOST.arch}
+}
 
 TARGET = QRCode_Generator
 TEMPLATE = app
@@ -33,12 +38,19 @@ HEADERS  += mainwindow.h \
 INCLUDEPATH += libs_inc \
         generator
 
-unix:{
-	LIBS += -L../libs/linux/
+linux-g++-64 {
+    LIBS += -L../libs/linux/x64/
     LIBS += -lqrencode
 }
-win32:{
-	LIBS += -L../libs/win/x64/
+win32-msvc {
+    contains(TARGET_ARCH, x86_64) {
+        ARCHITECTURE = x64
+        LIBS += -L../libs/win/x64/
+    } else {
+        ARCHITECTURE = x86
+        LIBS += -L../libs/win/x86/
+    }
+    message("ARCHITECTURE="$$ARCHITECTURE)
 }
 
 FORMS    += mainwindow.ui
