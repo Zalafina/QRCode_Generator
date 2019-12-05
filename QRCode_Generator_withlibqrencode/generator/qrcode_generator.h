@@ -11,7 +11,7 @@
 class QRCodeGenerator : public QObject
 {
 public:
-    explicit QRCodeGenerator(QObject *parent = 0);
+    explicit QRCodeGenerator(QObject *parent = nullptr);
 
 #ifdef Q_OS_WINDOWS
     static void Initialize();
