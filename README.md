@@ -1,5 +1,5 @@
 # QRCode_Generator
-A simple QRCode generator of C++ with Qt Widget.
+A simple QRCode generator use libqrencode written by Qt C++.
 
 ## Feature details
 1. Use libqrencode for QRCode encoding.
